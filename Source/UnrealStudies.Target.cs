@@ -1,14 +1,14 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
 using System.Collections.Generic;
 
 public class UnrealStudiesTarget : TargetRules
 {
-	public UnrealStudiesTarget(TargetInfo Target) : base(Target)
+	public UnrealStudiesTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.Add("UnrealStudies");
+		ExtraModuleNames.AddRange( new string[] { "UnrealStudies" } );
 	}
 }
