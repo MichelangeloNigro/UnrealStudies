@@ -34,6 +34,7 @@ void UHealthComponent::GetDamage(float Amount) {
 	OnGetDamage.Broadcast();
 	if (Health <= 0) {
 		OnHealtToZero.Broadcast();
+		dead=true;
 	}
 }
 

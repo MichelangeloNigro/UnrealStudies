@@ -30,6 +30,7 @@ private:
 	void CheckDamageTime(float DeltaTime);
 
 public:
+	bool dead=false;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	/** Brodcasted when the actor get damage */

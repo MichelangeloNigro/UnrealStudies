@@ -2,11 +2,9 @@
 
 #pragma once
 
-#include "Engine.h"
 #include "WeaponSlot.h"
 #include "EnemyPath.h"
 #include "GameFramework/Character.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "Enemy.generated.h"
 
 /** Delegate used to notify character actions */
