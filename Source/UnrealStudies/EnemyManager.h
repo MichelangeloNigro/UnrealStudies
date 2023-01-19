@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -14,12 +14,18 @@ enum EgameStates
 	Calm UMETA(DisplayName= "calm"),
 	Default UMETA(DisplayName= "default"),
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyManagerDelegate);
+
 UCLASS()
 class UNREALSTUDIES_API AEnemyManager : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+
+	UPROPERTY(BlueprintAssignable)
+	FEnemyManagerDelegate OnEnemyAllDeath;
 	// Sets default values for this actor's properties
 	AEnemyManager();
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
@@ -29,11 +35,11 @@ public:
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	USoundBase* soundFight;
 	UAudioComponent* current;
-	UPROPERTY(BlueprintReadWrite,VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite)
 	TArray<AActor*> EnemiesActors;
-	UPROPERTY(BlueprintReadWrite,VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	TArray<AEnemy*> Enemies;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	bool allEnemiesInLevel;
 	UPROPERTY(VisibleAnywhere)
 	TEnumAsByte<EgameStates> states;

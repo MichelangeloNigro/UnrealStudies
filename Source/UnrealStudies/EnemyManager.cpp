@@ -19,7 +19,16 @@ AEnemyManager::AEnemyManager()
 void AEnemyManager::BeginPlay()
 {
 	Super::BeginPlay();
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemy::StaticClass(), EnemiesActors);
+	if(allEnemiesInLevel)
+	{
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemy::StaticClass(), EnemiesActors);
+	}else
+	{
+		for (auto enem : Enemies)
+		{
+			EnemiesActors.Add(Cast<AActor>(enem));
+		}
+	}
 	previousState=Default;
 }
 
@@ -51,20 +60,23 @@ void AEnemyManager::Tick(float DeltaTime)
 	RemoveifDead();
 	for (auto enem : Enemies)
 	{
-		if (Cast<AEnemyAIController>(enem->GetController())->GetBlackboardComponent()->GetValueAsBool("SeePlayer"))
+		if (Cast<AEnemyAIController>(enem->GetController()))
 		{
-			previousState=states;
-			states = Fighting;
-			if (previousState!=states)
+			if (Cast<AEnemyAIController>(enem->GetController())->GetBlackboardComponent()->GetValueAsBool("SeePlayer"))
 			{
-				if (current->IsValidLowLevel())
+				previousState=states;
+				states = Fighting;
+				if (previousState!=states)
 				{
-					current->Stop();
+					if (current->IsValidLowLevel())
+					{
+						current->Stop();
 
+					}
+					current=UGameplayStatics::SpawnSound2D(GetWorld(), soundFight);
 				}
-			current=UGameplayStatics::SpawnSound2D(GetWorld(), soundFight);
+				return;
 			}
-			return;
 		}
 	}
 	if (Enemies.Num() > 0)
@@ -97,6 +109,7 @@ void AEnemyManager::Tick(float DeltaTime)
 			}
 			UGameplayStatics::PlaySound2D(GetWorld(), soundCalm);
 			current=UGameplayStatics::SpawnSound2D(GetWorld(), soundCalm);
+			OnEnemyAllDeath.Broadcast();
 		}
 	}
 }
