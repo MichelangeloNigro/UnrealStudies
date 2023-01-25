@@ -20,6 +20,8 @@ class UNREALSTUDIES_API AEnemyAIController : public AAIController
 	
 public:
 	AEnemyAIController();
+	UPROPERTY(EditAnywhere)
+	bool onStartAi=true;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI: Team")
 	float TeammateAdviseRadius = 10000.f;

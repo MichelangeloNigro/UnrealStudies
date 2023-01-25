@@ -20,7 +20,6 @@ protected:
 
 private:
 	float HealthDefaultValue;
-	float HealthMaxValue;
 	float ElapsedTime;
 	float TimeSinceLastDamage;
 	bool bIsDamaged;
@@ -30,6 +29,9 @@ private:
 	void CheckDamageTime(float DeltaTime);
 
 public:
+	UPROPERTY(EditAnywhere)
+	float HealthMaxValue;
+	bool canBeDamaged=true;
 	bool dead=false;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 

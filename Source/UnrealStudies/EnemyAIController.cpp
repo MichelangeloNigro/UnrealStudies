@@ -36,7 +36,12 @@ AEnemyAIController::AEnemyAIController() {
 void AEnemyAIController::BeginPlay() {
 	Super::BeginPlay();
 
-	RunBehaviorTree(BehaviourTree);
+
+	if (onStartAi)
+	{
+		RunBehaviorTree(BehaviourTree);
+
+	}
 	// Inscribe to delegate to stop behaviour tree when the pawn die
 	AEnemy* ControlledPawn = Cast<AEnemy>(GetPawn());
 
@@ -49,7 +54,10 @@ void AEnemyAIController::BeginPlay() {
 	}
 	
 	// Add OnPerceptionUpdate_SenseManagement to the UE4's perception component
-	PerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AEnemyAIController::OnPerceptionUpdate_SenseManagement);
+	if (PerceptionComponent->IsValidLowLevel())
+	{
+		PerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AEnemyAIController::OnPerceptionUpdate_SenseManagement);
+	}
 }
 
 

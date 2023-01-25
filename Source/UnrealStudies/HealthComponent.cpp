@@ -28,13 +28,16 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 
 void UHealthComponent::GetDamage(float Amount) {
-	Health = FMath::Clamp(Health - Amount, 0.0f, HealthMaxValue);
-	bIsDamaged = true;
-	TimeSinceLastDamage = GetWorld()->GetTimeSeconds();
-	OnGetDamage.Broadcast();
-	if (Health <= 0) {
-		OnHealtToZero.Broadcast();
-		dead=true;
+	if (canBeDamaged)
+	{
+		Health = FMath::Clamp(Health - Amount, 0.0f, HealthMaxValue);
+		bIsDamaged = true;
+		TimeSinceLastDamage = GetWorld()->GetTimeSeconds();
+		OnGetDamage.Broadcast();
+		if (Health <= 0) {
+			OnHealtToZero.Broadcast();
+			dead=true;
+		}
 	}
 }
 

@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "UnrealStudies/Boss.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -338,12 +339,17 @@ void ATP_ThirdPersonCharacter::FireFromWeapon() {
 	OnCharacterTraceLine.Broadcast();
 
 	if (bHit) {
-		//DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 3.0f);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Arsenal[ActiveWeapon].HitEFX, Hit.ImpactPoint);
 		AEnemy* HitActor = Cast<AEnemy>(Hit.Actor.Get());
+		ABoss* HitBoss= Cast<ABoss>(Hit.Actor.Get());
 
 		if (HitActor) {
 			HitActor->GetHealthComponent()->GetDamage(Arsenal[ActiveWeapon].Damage);
+		}
+		if (HitBoss)
+		{
+			HitBoss->GetHealthComponent()->GetDamage(Arsenal[ActiveWeapon].Damage);
+
 		}
 	}
 }

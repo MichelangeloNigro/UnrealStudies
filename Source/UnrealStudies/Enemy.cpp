@@ -17,6 +17,7 @@ AEnemy::AEnemy() {
 	GetCharacterMovement()->CrouchedHalfHeight = 52.0f;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 0.0f, 250.0f);
 
+	
 	// Add a mesh for the weapon
 	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
 	WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "hand_rSocket");
@@ -38,7 +39,10 @@ void AEnemy::Tick(float DeltaTime) {
 }
 
 void AEnemy::OnConstruction(const FTransform & Transform) {
-	WeaponMesh->SetStaticMesh(WeaponSlot.WeaponMesh);
+	if(WeaponMesh->IsValidLowLevel())
+	{
+		WeaponMesh->SetStaticMesh(WeaponSlot.WeaponMesh);
+	}
 	GetHealthComponent()->bAutoRecovery = false;
 }
 
