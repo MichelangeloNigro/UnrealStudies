@@ -16,7 +16,7 @@ enum EbossStates
 	MeteorRain UMETA(DisplayName= "MeteorRain"),
 };
 UCLASS()
-class UNREALSTUDIES_API ABoss : public AEnemy
+class UNREALSTUDIES_API ABoss : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -36,12 +36,15 @@ public:
 	FEnemyState FireEvent;
 	UPROPERTY(BlueprintAssignable)
 	FEnemyState MeteorRainEvent;
-
+UPROPERTY(EditAnywhere)
+	float divider;
 	UPROPERTY(EditAnywhere)
 	int fireDamage;
 
 	UPROPERTY(EditAnywhere)
 	float pauseBetwenCalm;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	AActor* gateManager;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TEnumAsByte<EbossStates> state;
@@ -57,7 +60,11 @@ public:
 	UParticleSystem* fireFX;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USoundBase* SoundFire;
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = "true"))
+    	UHealthComponent* HealthComponent;
+    	UFUNCTION(BlueprintCallable, Category = "Health")
+    	FORCEINLINE class UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+	void Death();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

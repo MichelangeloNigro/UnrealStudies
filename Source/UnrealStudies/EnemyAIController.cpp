@@ -2,6 +2,8 @@
 
 
 #include "EnemyAIController.h"
+
+#include "Boss.h"
 #include "Enemy.h"
 #include "TP_ThirdPerson/TP_ThirdPersonCharacter.h"
 #include "HealthComponent.h"
