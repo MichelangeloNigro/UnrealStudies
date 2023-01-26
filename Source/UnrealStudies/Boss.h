@@ -7,14 +7,16 @@
 #include "GameFramework/Character.h"
 #include "Boss.generated.h"
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyState);
+
 UENUM()
 enum EbossStates
 {
-	Calm UMETA(DisplayName= "calm"),
+	Calm1 UMETA(DisplayName= "calm"),
 	FireCircle UMETA(DisplayName= "fireCircle"),
 	Calm2 UMETA(DisplayName= "calm2"),
 	MeteorRain UMETA(DisplayName= "MeteorRain"),
 };
+
 UCLASS()
 class UNREALSTUDIES_API ABoss : public ACharacter
 {
@@ -22,51 +24,56 @@ class UNREALSTUDIES_API ABoss : public ACharacter
 
 public:
 	FTimerHandle handle;
-	UPROPERTY(BlueprintReadWrite,EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USoundBase* soundCalm;
-	UPROPERTY(BlueprintReadWrite,EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USoundBase* FightMusic;
 	// Sets default values for this character's properties
 	ABoss();
-	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState CalmEvent1;
-	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState CalmEvent2;
-	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState FireEvent;
-	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState MeteorRainEvent;
-	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState FireAttack;
-UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)
 	float divider;
 	UPROPERTY(EditAnywhere)
 	int fireDamage;
-
 	UPROPERTY(EditAnywhere)
 	float pauseBetwenCalm;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AActor* gateManager;
-	
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	TEnumAsByte<EbossStates> state=FireCircle;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float percent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TEnumAsByte<EbossStates> state;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<EbossStates> previousstate;
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 	UFUNCTION(BlueprintCallable)
 	void CheckState();
-	void MeteorRain();
+	UFUNCTION(BlueprintCallable)
+	void MeteorRain(UClass* meteor);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int meteors;
 	FTimerDelegate TimerDelegate;
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* fireFX;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USoundBase* SoundFire;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = "true"))
-    	UHealthComponent* HealthComponent;
-    	UFUNCTION(BlueprintCallable, Category = "Health")
-    	FORCEINLINE class UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+	UHealthComponent* HealthComponent;
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	FORCEINLINE class UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
 	void Death();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

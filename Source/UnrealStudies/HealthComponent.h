@@ -31,6 +31,7 @@ private:
 public:
 	UPROPERTY(EditAnywhere)
 	float HealthMaxValue;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	bool canBeDamaged=true;
 	bool dead=false;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
