@@ -17,6 +17,7 @@ ABoss::ABoss()
 
 void ABoss::Fire()
 {
+	FireAttack.Broadcast();
 	FCollisionQueryParams Params;
 	// Ignore the enemy's pawn
 	AActor* Myself = Cast<AActor>(this);
@@ -28,7 +29,7 @@ void ABoss::Fire()
 	FVector End = Start + (GetActorForwardVector() * 3000);
 	FHitResult Hit;
 	UGameplayStatics::SpawnSound2D(GetWorld(), SoundFire);
-	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), fireFX, GetActorLocation());
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), fireFX, GetActorLocation(), GetActorRotation());
 	bool bHit = GetWorld()->SweepSingleByChannel(Hit, Start, End, FQuat::Identity, ECC_Pawn, CollShape, Params);
 
 	if (bHit)
@@ -56,22 +57,11 @@ void ABoss::CheckState()
 	float percent = (curHealth * 100) / maxHealth;
 	if (percent > 70 || percent < 50)
 	{
-		state = FireCircle;
-		if (previousstate != FireCircle)
-		{
-			FireEvent.Broadcast();
-		}
-		return;
-	}
-	else
-	{
 		state = EbossStates::MeteorRain;
 		if (previousstate != EbossStates::MeteorRain)
 		{
-			CalmEvent2.Broadcast();
-			GetWorldTimerManager().SetTimer(handle, TimerDelegate, pauseBetwenCalm, false);
+			FireEvent.Broadcast();
 		}
-		return;
 	}
 }
 
@@ -104,4 +94,5 @@ void ABoss::BeginPlay()
 void ABoss::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 }

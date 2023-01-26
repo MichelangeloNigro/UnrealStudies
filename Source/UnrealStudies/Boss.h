@@ -28,14 +28,16 @@ public:
 	USoundBase* FightMusic;
 	// Sets default values for this character's properties
 	ABoss();
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FEnemyState CalmEvent1;
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FEnemyState CalmEvent2;
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FEnemyState FireEvent;
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FEnemyState MeteorRainEvent;
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	FEnemyState FireAttack;
 UPROPERTY(EditAnywhere)
 	float divider;
 	UPROPERTY(EditAnywhere)
@@ -47,7 +49,7 @@ UPROPERTY(EditAnywhere)
 	AActor* gateManager;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	TEnumAsByte<EbossStates> state;
+	TEnumAsByte<EbossStates> state=FireCircle;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TEnumAsByte<EbossStates> previousstate;
 	UFUNCTION(BlueprintCallable)

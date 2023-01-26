@@ -34,12 +34,13 @@ public:
 	USoundBase* soundstealth;
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	USoundBase* soundFight;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	UAudioComponent* current;
 	UPROPERTY(BlueprintReadWrite)
 	TArray<AActor*> EnemiesActors;
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	TArray<AEnemy*> Enemies;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	bool allEnemiesInLevel;
 	UPROPERTY(VisibleAnywhere)
 	TEnumAsByte<EgameStates> states;

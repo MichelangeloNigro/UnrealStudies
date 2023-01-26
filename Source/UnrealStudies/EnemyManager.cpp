@@ -107,7 +107,6 @@ void AEnemyManager::Tick(float DeltaTime)
 				current->Stop();
 
 			}
-			UGameplayStatics::PlaySound2D(GetWorld(), soundCalm);
 			current=UGameplayStatics::SpawnSound2D(GetWorld(), soundCalm);
 			OnEnemyAllDeath.Broadcast();
 		}
