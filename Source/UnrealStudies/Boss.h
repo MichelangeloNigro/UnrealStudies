@@ -31,48 +31,50 @@ public:
 	USoundBase* FightMusic;
 	// Sets default values for this character's properties
 	ABoss();
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Meteor")
+	bool MeteorOnSoil;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState CalmEvent1;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState CalmEvent2;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FEnemyState FireEvent;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category="Meteor")
 	FEnemyState MeteorRainEvent;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category="Fire Attack")
 	FEnemyState FireAttack;
-	UPROPERTY(EditAnywhere)
-	float divider;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="Fire Attack")
 	int fireDamage;
+	UPROPERTY(EditAnywhere, Category="Meteor")
+	int meteorDamage;
 	UPROPERTY(EditAnywhere)
 	float pauseBetwenCalm;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AActor* gateManager;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float percent;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<EbossStates> state;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<EbossStates> previousstate;
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable,Category="Fire Attack")
 	void Fire();
 	UFUNCTION(BlueprintCallable)
 	void CheckState();
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category="Meteor")
 	void MeteorRain();
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Meteor")
 	UClass* meteor;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Meteor")
 	float minVel;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Meteor")
 	float maxvel;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Meteor")
 	int meteors;
 	FTimerDelegate TimerDelegate;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="Fire Attack")
 	UParticleSystem* fireFX;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Fire Attack")
 	USoundBase* SoundFire;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;

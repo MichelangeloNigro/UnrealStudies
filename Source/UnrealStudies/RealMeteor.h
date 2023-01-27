@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Boss.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "RealMeteor.generated.h"
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMeteorEvent);
 
 UCLASS()
 class UNREALSTUDIES_API ARealMeteor : public AActor
@@ -18,6 +20,11 @@ public:
 	UStaticMeshComponent* MeteorModel;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category= Gameplay)
 	float damage;
+	FTimerHandle handle2;
+	FMeteorEvent onSoil;
+	UPROPERTY(BlueprintReadWrite)
+	ABoss* spawner;
+	void Death();
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,9 +36,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION()
-		void OnTriggerEnter(AActor* overlappedActor, AActor* overlappingActor);  
+		void OnTriggerEnter(AActor* overlappedActor, AActor* overlappingActor);
+	
 	// Called to bind functionality to input
 	UFUNCTION(BlueprintCallable, Category = "meshes")
 	FORCEINLINE class UStaticMeshComponent* GetMesh() const { return MeteorModel; }
+	UFUNCTION(BlueprintCallable, Category = "boss")
+	FORCEINLINE class ABoss* GetSpawner() const { return spawner; }
 	
 };

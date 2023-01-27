@@ -86,14 +86,18 @@ void ABoss::MeteorRain()
 	{
 		FVector speed;
 		FRotator rot = FRotator(0, rand + (degree * i),0 );
-		ARealMeteor* temp = GetWorld()->SpawnActor<ARealMeteor>(meteor, GetActorLocation(), rot);
+		ARealMeteor* temp = GetWorld()->SpawnActor<ARealMeteor>(meteor, GetActorLocation()+FVector(0,0,100), rot);
+		temp->spawner=this;
 		DrawDebugPoint(GetWorld(),temp->GetActorLocation(),500,FColor::Black,false,4.0f);
 		DrawDebugPoint(GetWorld(),temp->GetActorForwardVector() * FMath::FRandRange(minVel, maxvel)+GetActorLocation(),500,FColor::Red,false,4.0f);
-		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), speed, temp->GetActorLocation(),temp->GetActorForwardVector() * FMath::FRandRange(minVel, maxvel)+GetActorLocation());
+		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), speed, temp->GetActorLocation(),temp->GetActorForwardVector() * FMath::FRandRange(minVel, maxvel)+GetActorLocation(),0,0.3);
 		GEngine->AddOnScreenDebugMessage(-1,4.0 , FColor::Blue,speed.ToString());
 		temp->GetMesh()->SetPhysicsLinearVelocity(speed);
 	}
 }
+
+
+
 
 void ABoss::Death()
 {
