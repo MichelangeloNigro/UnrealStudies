@@ -4,6 +4,8 @@
 #include "Boss.h"
 
 #include "HealthComponent.h"
+#include "Meteor.h"
+#include "RealMeteor.h"
 #include "Commandlets/EditorCommandlets.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -75,29 +77,21 @@ void ABoss::CheckState()
 	}
 }
 
-void ABoss::MeteorRain(UClass* meteor)
+void ABoss::MeteorRain()
 {
 	float rand = FMath::FRandRange(0, 360);
 	float degree = 360 / meteors;
-	for (int i = 0; i < meteors + 1; i++)
+
+	for (int i = 0; i < meteors ; i++)
 	{
-		FActorSpawnParameters SpawnInfo;
-		FRotator rot = FRotator(0, 0, rand + (degree * i));
-		AActor* temp = GetWorld()->SpawnActor<AActor>(meteor, GetActorLocation(), rot);
 		FVector speed;
-		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), speed, temp->GetActorLocation(),
-		                                                      temp->GetActorForwardVector() * FMath::FRandRange(2, 10));
-		
-		if (Cast<UActorComponents>(temp))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, Cast<UStaticMesh>(temp)->GetName());
-			
-
-		}else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, TEXT("fail"));
-
-		}
+		FRotator rot = FRotator(0, rand + (degree * i),0 );
+		ARealMeteor* temp = GetWorld()->SpawnActor<ARealMeteor>(meteor, GetActorLocation(), rot);
+		DrawDebugPoint(GetWorld(),temp->GetActorLocation(),500,FColor::Black,false,4.0f);
+		DrawDebugPoint(GetWorld(),temp->GetActorForwardVector() * FMath::FRandRange(minVel, maxvel)+GetActorLocation(),500,FColor::Red,false,4.0f);
+		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), speed, temp->GetActorLocation(),temp->GetActorForwardVector() * FMath::FRandRange(minVel, maxvel)+GetActorLocation());
+		GEngine->AddOnScreenDebugMessage(-1,4.0 , FColor::Blue,speed.ToString());
+		temp->GetMesh()->SetPhysicsLinearVelocity(speed);
 	}
 }
 

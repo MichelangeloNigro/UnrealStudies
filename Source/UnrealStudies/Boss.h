@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Enemy.h"
+#include "Meteor.h"
 #include "GameFramework/Character.h"
 #include "Boss.generated.h"
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyState);
@@ -59,7 +60,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CheckState();
 	UFUNCTION(BlueprintCallable)
-	void MeteorRain(UClass* meteor);
+	void MeteorRain();
+	UPROPERTY(EditAnywhere)
+	UClass* meteor;
+	UPROPERTY(EditAnywhere)
+	float minVel;
+	UPROPERTY(EditAnywhere)
+	float maxvel;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int meteors;
 	FTimerDelegate TimerDelegate;
