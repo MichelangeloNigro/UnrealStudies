@@ -44,7 +44,23 @@ class ATP_ThirdPersonCharacter : public ACharacter
 
 public:
 	ATP_ThirdPersonCharacter();
-
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stamina")
+	float runMultiplier;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stamina")
+	float staminaMax;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stamina")
+	float staminaCur;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stamina")
+	float recoveryStaminaRate;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stamina")
+	float lossStaminaRate;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stamina")
+	float staminaRecoveryTick;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category="Stamina")
+	float staminaLossTick;
+	
+	
+	
 	/** Broadcasted when character land on ground */
 	UPROPERTY(BlueprintAssignable)
 	FGameStateCharacter OnCharacterLanding;
